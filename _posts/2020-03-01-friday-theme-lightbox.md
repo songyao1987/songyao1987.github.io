@@ -23,7 +23,7 @@ Here's an example that extends the Masonry layout to add a Lightbox to show each
 
 As before, to automate the layout, a list of images is stored in a frontmatter variable. The post then loops over that list to output the cards. This is easier than copy-pasting the same HTML for each image.
 
-Some Bootstrap HTML is then included in the page to create the lightbox. This is done using the modal and some simple CSS and JS to make it all work together. To have a look at how this works, look at this page in the [GitHub repo](https://github.com/sfreytag/friday-theme/tree/master/_posts).
+Some Bootstrap HTML is then included in the page to create the lightbox. This is done using the modal and some simple CSS and JS to make it all work together. To have a look at how this works, look at this page in the [GitHub repo](https://github.com/sfreytag/songyao1987.github.io/tree/master/_posts).
 
 Here's the card columns in action. Click each image to open it in a lightbox.
 
