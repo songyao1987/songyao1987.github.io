@@ -1,0 +1,19 @@
+- caption: Friday Theme on GitHub
+  href: https://github.com/sfreytag/friday-theme
+  icon: entypo/github.svg
+
+- caption: linkedin
+  href: https://linkedin.com
+  icon: entypo/linkedin.svg
+
+- caption: Facebook
+  href: https://www.facebook.com
+  icon: entypo/facebook.svg
+
+- caption: instagram
+  href: https://www.instagram.com
+  icon: entypo/instagram.svg
+
+- caption: ChangSha
+  href: https://www.google.com/maps/@28.2311663,112.9598835,16.73z
+  icon: entypo/location-pin.svg
