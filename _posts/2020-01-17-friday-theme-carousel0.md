@@ -46,4 +46,27 @@ Now we can try to access the home page of jenkins and you can see the login requ
 
 <img src="/assets/images/jenkins_login.png" alt="Login" style="width:525px;height:480px;">
 
-pending...
+
+Secondly, we need to complete some configurations and install a few plugins in jenkins page,just like gradle,gitlab,email,pipeline(strong recommended),webhook.etc.
+
+Now we can config the global environment variables in the following page(example NDK is required in my android SDK project).
+
+<img src="/assets/images/global_settings.png" alt="Login" style="width:888px;height:380px;">
+
+Finally, we also need to complete the following settings if we need to use it.
+
+Language setting:
+
+<img src="/assets/images/local_set.png" alt="Login" style="width:888px;height:280px;">
+
+Android SDK setting:
+
+<img src="/assets/images/android_sdk_set.png" alt="Login" style="width:888px;height:480px;">
+
+Gitlab setting:
+
+<img src="/assets/images/gitlab_set.png" alt="Login" style="width:888px;height:380px;">
+
+Email setting:
+
+<img src="/assets/images/email_set.png" alt="Login" style="width:888px;height:380px;">
