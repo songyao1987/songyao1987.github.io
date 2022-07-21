@@ -1,5 +1,5 @@
 ---
-title:  How to implement CICD
+title:  How to work with Jenkins,Gitlab and Maven
 tags:
   - Jenkins
   - CICD
@@ -9,11 +9,7 @@ tags:
   - Groovy
   - Java
 images:
-  - https://images.unsplash.com/photo-1421789665209-c9b2a435e3dc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5b1016b885e7438c4633109d77368d4d&auto=format&fit=crop&w=1651&q=80
-  - https://images.unsplash.com/photo-1504626835342-6b01071d182e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=975855d515c9d56352ee3bfe74287f2b&auto=format&fit=crop&w=1651&q=80
-  - https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=468a8c18f5d811cf03c654b653b5089e&auto=format&fit=crop&w=1650&q=80
-  - https://images.unsplash.com/photo-1506291318501-948562d765d7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=71ad8e3b7b4bd210182ed5e5c024903b&auto=format&fit=crop&w=1650&q=80
-  - https://images.unsplash.com/photo-1500402448245-d49c5229c564?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f19c590b253f803a7f9b643c59017160&auto=format&fit=crop&w=1650&q=80
+  - https://unsplash.com/photos/AuyF6tZSIpk
 ---
 First of all, we need to install jenkins as the following steps.
 <!--more-->
@@ -47,26 +43,53 @@ Now we can try to access the home page of jenkins and you can see the login requ
 <img src="/assets/images/jenkins_login.png" alt="Login" style="width:525px;height:480px;">
 
 
-Secondly, we need to complete some configurations and install a few plugins in jenkins page,just like gradle,gitlab,email,pipeline(strong recommended),webhook.etc.
+Secondly, we need to complete some configurations and install a few plugins in jenkins page,just like gradle,gitlab,email,pipeline(strong recommended),webhook.etc.In addition,we also need to config environment varibles in System configurations and learning how to write jenkinsfile with Groovy.Anyway the multibranch pipeline mode is strongly recommended.
+Below is a jenkinsfile sample for building an android APK:
+{% highlight Java %}
+def gradleproperties = """
+    MAVEN_REPO_SNAPSHOTS_URL=http://127.0.0.1:8081/repository/maven-snapshots/
+    MAVEN_REPO_RELEASES_URL=http://127.0.0.1:8081/repository/maven-releases/
+    MAVEN_REPO_USERNAME=admin
+    MAVEN_REPO_PASSWORD=admin
+    SIGNPASS=123456
+    SIGNCERT=/home/ubuntu/ApkSignCert/demoapp.jks
 
-Now we can config the global environment variables in the following page(example NDK is required in my android SDK project).
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+          steps {
+              sh """
+              #mkdir /root/.gradle
+              echo '${gradleproperties}' >> /root/.gradle/gradle.properties
+              """
+              sh 'chmod +x gradlew'
+              sh './gradlew clean build -x check pmd'
+            }
+          }
+        stage('Archive') {
+            steps {
+                archiveArtifacts 'app/build/outputs/**/*.apk'
+            }
+        }
+        stage('Test') {
+              steps {
+                  echo 'Testing..'
+              }
+        }
+    }
+    options {
+      gitLabConnection('Connection2Gitlab')
+  	}
+    post {
+      failure {
+        updateGitlabCommitStatus name: 'Connection2Gitlab', state: 'failed'
+      }
+      success {
+        updateGitlabCommitStatus name: 'Connection2Gitlab', state: 'success'
+      }
+    }
+}
+{% endhighlight %}
 
-<img src="/assets/images/global_settings.png" alt="Login" style="width:888px;height:380px;">
-
-Finally, we also need to complete the following settings if we need to use it.
-
-Language setting:
-
-<img src="/assets/images/local_set.png" alt="Login" style="width:888px;height:280px;">
-
-Android SDK setting:
-
-<img src="/assets/images/android_sdk_set.png" alt="Login" style="width:888px;height:480px;">
-
-Gitlab setting:
-
-<img src="/assets/images/gitlab_set.png" alt="Login" style="width:888px;height:380px;">
-
-Email setting:
-
-<img src="/assets/images/email_set.png" alt="Login" style="width:888px;height:380px;">
+Finally you can see the artifact in build page and can download by manual.

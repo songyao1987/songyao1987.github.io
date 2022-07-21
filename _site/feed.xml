@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-19T17:16:31+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">EricSong</title><entry><title type="html">How to config SSL in Jenkins</title><link href="http://localhost:4000/2020/03/02/friday-theme-carousel.html" rel="alternate" type="text/html" title="How to config SSL in Jenkins" /><published>2020-03-02T00:00:00+08:00</published><updated>2020-03-02T00:00:00+08:00</updated><id>http://localhost:4000/2020/03/02/friday-theme-carousel</id><content type="html" xml:base="http://localhost:4000/2020/03/02/friday-theme-carousel.html"><![CDATA[<p>Here is the guidelines to activate SSL in jenkins.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-21T21:49:52+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">EricSong</title><entry><title type="html">How to publish your android library to MavenCenter</title><link href="http://localhost:4000/2021/05/06/friday-theme-carousel7.html" rel="alternate" type="text/html" title="How to publish your android library to MavenCenter" /><published>2021-05-06T00:00:00+08:00</published><updated>2021-05-06T00:00:00+08:00</updated><id>http://localhost:4000/2021/05/06/friday-theme-carousel7</id><content type="html" xml:base="http://localhost:4000/2021/05/06/friday-theme-carousel7.html"><![CDATA[<p>I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.
+<!--more-->
+<img src="https://images.unsplash.com/photo-1657659448918-f54b8cdc3c67?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2fEpwZzZLaWRsLUhrfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" /></p>]]></content><author><name></name></author><category term="Jenkins" /><category term="CICD" /><category term="Maven" /><category term="Gitlab" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.]]></summary></entry><entry><title type="html">How to config SSL in Jenkins</title><link href="http://localhost:4000/2020/03/02/friday-theme-carousel.html" rel="alternate" type="text/html" title="How to config SSL in Jenkins" /><published>2020-03-02T00:00:00+08:00</published><updated>2020-03-02T00:00:00+08:00</updated><id>http://localhost:4000/2020/03/02/friday-theme-carousel</id><content type="html" xml:base="http://localhost:4000/2020/03/02/friday-theme-carousel.html"><![CDATA[<p>Here is the guidelines to activate SSL in jenkins.
 <!--more-->
 Step 1: Generate CSR certificate
 Execute the following command to generate csr certificate and give name “demo.ssl.csr“.</p>
@@ -84,7 +86,7 @@ Make few changes in the Jenkins’s file property. Open the file /etc/default/je
     </a>
 </div>
 
-<p>Hope it can be helpful to you.</p>]]></content><author><name></name></author><category term="Jenkins" /><category term="CICD" /><category term="Maven" /><category term="Markdown" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[Here is the guidelines to activate SSL in jenkins.]]></summary></entry><entry><title type="html">How to implement CICD</title><link href="http://localhost:4000/2020/01/17/friday-theme-carousel0.html" rel="alternate" type="text/html" title="How to implement CICD" /><published>2020-01-17T00:00:00+08:00</published><updated>2020-01-17T00:00:00+08:00</updated><id>http://localhost:4000/2020/01/17/friday-theme-carousel0</id><content type="html" xml:base="http://localhost:4000/2020/01/17/friday-theme-carousel0.html"><![CDATA[<p>First of all, we need to install jenkins as the following steps.
+<p>Hope it can be helpful to you.</p>]]></content><author><name></name></author><category term="Jenkins" /><category term="CICD" /><category term="Maven" /><category term="Markdown" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[Here is the guidelines to activate SSL in jenkins.]]></summary></entry><entry><title type="html">How to work with Jenkins,Gitlab and Maven</title><link href="http://localhost:4000/2020/01/17/friday-theme-carousel0.html" rel="alternate" type="text/html" title="How to work with Jenkins,Gitlab and Maven" /><published>2020-01-17T00:00:00+08:00</published><updated>2020-01-17T00:00:00+08:00</updated><id>http://localhost:4000/2020/01/17/friday-theme-carousel0</id><content type="html" xml:base="http://localhost:4000/2020/01/17/friday-theme-carousel0.html"><![CDATA[<p>First of all, we need to install jenkins as the following steps.
 <!--more-->
 Step 1: install JDK, and we can check it with command “java –version”</p>
 
@@ -111,26 +113,52 @@ Add the key from official software repository to the apt key in locall</p>
 
 <p><img src="/assets/images/jenkins_login.png" alt="Login" style="width:525px;height:480px;" /></p>
 
-<p>Secondly, we need to complete some configurations and install a few plugins in jenkins page,just like gradle,gitlab,email,pipeline(strong recommended),webhook.etc.</p>
+<p>Secondly, we need to complete some configurations and install a few plugins in jenkins page,just like gradle,gitlab,email,pipeline(strong recommended),webhook.etc.In addition,we also need to config environment varibles in System configurations and learning how to write jenkinsfile with Groovy.Anyway the multibranch pipeline mode is strongly recommended.
+Below is a jenkinsfile sample for building an android APK:</p>
 
-<p>Now we can config the global environment variables in the following page(example NDK is required in my android SDK project).</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">def</span> <span class="n">gradleproperties</span> <span class="o">=</span> <span class="s">"""
+    MAVEN_REPO_SNAPSHOTS_URL=http://127.0.0.1:8081/repository/maven-snapshots/
+    MAVEN_REPO_RELEASES_URL=http://127.0.0.1:8081/repository/maven-releases/
+    MAVEN_REPO_USERNAME=admin
+    MAVEN_REPO_PASSWORD=admin
+    SIGNPASS=123456
+    SIGNCERT=/home/ubuntu/ApkSignCert/demoapp.jks
 
-<p><img src="/assets/images/global_settings.png" alt="Login" style="width:888px;height:380px;" /></p>
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+          steps {
+              sh """</span>
+              <span class="err">#</span><span class="n">mkdir</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="na">gradle</span>
+              <span class="n">echo</span> <span class="err">'$</span><span class="o">{</span><span class="n">gradleproperties</span><span class="o">}</span><span class="err">'</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="na">gradle</span><span class="o">/</span><span class="n">gradle</span><span class="o">.</span><span class="na">properties</span>
+              <span class="s">""</span><span class="err">"</span>
+              <span class="n">sh</span> <span class="err">'</span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">gradlew</span><span class="err">'</span>
+              <span class="n">sh</span> <span class="err">'</span><span class="o">./</span><span class="n">gradlew</span> <span class="n">clean</span> <span class="n">build</span> <span class="o">-</span><span class="n">x</span> <span class="n">check</span> <span class="n">pmd</span><span class="err">'</span>
+            <span class="o">}</span>
+          <span class="o">}</span>
+        <span class="n">stage</span><span class="o">(</span><span class="err">'</span><span class="nc">Archive</span><span class="err">'</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">steps</span> <span class="o">{</span>
+                <span class="n">archiveArtifacts</span> <span class="err">'</span><span class="n">app</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">outputs</span><span class="cm">/**/</span><span class="o">*.</span><span class="na">apk</span><span class="err">'</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">stage</span><span class="o">(</span><span class="err">'</span><span class="nc">Test</span><span class="err">'</span><span class="o">)</span> <span class="o">{</span>
+              <span class="n">steps</span> <span class="o">{</span>
+                  <span class="n">echo</span> <span class="err">'</span><span class="nc">Testing</span><span class="o">..</span><span class="err">'</span>
+              <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">options</span> <span class="o">{</span>
+      <span class="n">gitLabConnection</span><span class="o">(</span><span class="err">'</span><span class="nc">Connection2Gitlab</span><span class="err">'</span><span class="o">)</span>
+  	<span class="o">}</span>
+    <span class="n">post</span> <span class="o">{</span>
+      <span class="n">failure</span> <span class="o">{</span>
+        <span class="n">updateGitlabCommitStatus</span> <span class="nl">name:</span> <span class="err">'</span><span class="nc">Connection2Gitlab</span><span class="err">'</span><span class="o">,</span> <span class="nl">state:</span> <span class="err">'</span><span class="n">failed</span><span class="err">'</span>
+      <span class="o">}</span>
+      <span class="n">success</span> <span class="o">{</span>
+        <span class="n">updateGitlabCommitStatus</span> <span class="nl">name:</span> <span class="err">'</span><span class="nc">Connection2Gitlab</span><span class="err">'</span><span class="o">,</span> <span class="nl">state:</span> <span class="err">'</span><span class="n">success</span><span class="err">'</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
-<p>Finally, we also need to complete the following settings if we need to use it.</p>
-
-<p>Language setting:</p>
-
-<p><img src="/assets/images/local_set.png" alt="Login" style="width:888px;height:280px;" /></p>
-
-<p>Android SDK setting:</p>
-
-<p><img src="/assets/images/android_sdk_set.png" alt="Login" style="width:888px;height:480px;" /></p>
-
-<p>Gitlab setting:</p>
-
-<p><img src="/assets/images/gitlab_set.png" alt="Login" style="width:888px;height:380px;" /></p>
-
-<p>Email setting:</p>
-
-<p><img src="/assets/images/email_set.png" alt="Login" style="width:888px;height:380px;" /></p>]]></content><author><name></name></author><category term="Jenkins" /><category term="CICD" /><category term="Maven" /><category term="Gitlab" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[First of all, we need to install jenkins as the following steps.]]></summary></entry></feed>
+<p>Finally you can see the artifact in build page and can download by manual.</p>]]></content><author><name></name></author><category term="Jenkins" /><category term="CICD" /><category term="Maven" /><category term="Gitlab" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[First of all, we need to install jenkins as the following steps.]]></summary></entry></feed>

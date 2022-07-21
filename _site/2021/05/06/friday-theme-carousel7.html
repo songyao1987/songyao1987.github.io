@@ -10,7 +10,7 @@
 
     <title>
         
-            How to work with Jenkins,Gitlab and Maven &middot; EricSong
+            How to publish your android library to MavenCenter &middot; EricSong
         
     </title>
 
@@ -87,7 +87,7 @@
     <div class="card bg-light mb-3">
         <div class="card-body">
             <div class="card-title">
-                <h5>17 Jan 2020</h5>
+                <h5>06 May 2021</h5>
             </div>
             <div class="d-flex flex-wrap align-items-center">
                 <span class="icon grey mr-2 mb-2">
@@ -168,14 +168,14 @@
 
         </div>
         <div class="col-md-12 col-lg-8 col-xl-8 pb-4 content">
-            <h1 class="border border-top-0 border-right-0 border-left-0 mb-3 pb-2">How to work with Jenkins,Gitlab and Maven</h1>
+            <h1 class="border border-top-0 border-right-0 border-left-0 mb-3 pb-2">How to publish your android library to MavenCenter</h1>
 
 <div class="d-md-block d-lg-none">
     <div class="sticky-top space-before">
     <div class="card bg-light mb-3">
         <div class="card-body">
             <div class="card-title">
-                <h5>17 Jan 2020</h5>
+                <h5>06 May 2021</h5>
             </div>
             <div class="d-flex flex-wrap align-items-center">
                 <span class="icon grey mr-2 mb-2">
@@ -253,82 +253,9 @@
 
 </div>
 
-<p>First of all, we need to install jenkins as the following steps.
+<p>I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.
 <!--more-->
-Step 1: install JDK, and we can check it with command “java –version”</p>
-
-<p>Step 2: install android SDK and android NDK if you are working in Android projects</p>
-
-<p>Step 3: install Jenkins
-Add the key from official software repository to the apt key in locall</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">wget</span> <span class="o">-</span><span class="nx">q</span> <span class="o">-</span><span class="nx">O</span> <span class="o">-</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -</span></code></pre></figure>
-
-<p>Add the address to your locall list</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">sh</span> <span class="o">-</span><span class="nx">c</span> <span class="dl">'</span><span class="s1">echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list</span><span class="dl">'</span></code></pre></figure>
-
-<p>Then you can complete the installation of jenkins by the following commands,</p>
-
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="kd">get</span> <span class="nx">update</span>
-<span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="kd">get</span> <span class="nx">install</span> <span class="nx">jenkins</span>
-<span class="nx">sudo</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">init</span><span class="p">.</span><span class="nx">d</span><span class="o">/</span><span class="nx">jenkins</span> <span class="p">[</span><span class="nx">start</span><span class="o">|</span><span class="nx">restart</span><span class="o">|</span><span class="nx">stop</span><span class="p">]</span>
-<span class="nx">systemctl</span> <span class="nx">status</span> <span class="nx">jenkins</span></code></pre></figure>
-
-<p>Now we can try to access the home page of jenkins and you can see the login required as below.
-<!-- ![](/assets/images/jenkins_login.png) --></p>
-
-<p><img src="/assets/images/jenkins_login.png" alt="Login" style="width:525px;height:480px;" /></p>
-
-<p>Secondly, we need to complete some configurations and install a few plugins in jenkins page,just like gradle,gitlab,email,pipeline(strong recommended),webhook.etc.In addition,we also need to config environment varibles in System configurations and learning how to write jenkinsfile with Groovy.Anyway the multibranch pipeline mode is strongly recommended.
-Below is a jenkinsfile sample for building an android APK:</p>
-
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">def</span> <span class="n">gradleproperties</span> <span class="o">=</span> <span class="s">"""
-    MAVEN_REPO_SNAPSHOTS_URL=http://127.0.0.1:8081/repository/maven-snapshots/
-    MAVEN_REPO_RELEASES_URL=http://127.0.0.1:8081/repository/maven-releases/
-    MAVEN_REPO_USERNAME=admin
-    MAVEN_REPO_PASSWORD=admin
-    SIGNPASS=123456
-    SIGNCERT=/home/ubuntu/ApkSignCert/demoapp.jks
-
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-          steps {
-              sh """</span>
-              <span class="err">#</span><span class="n">mkdir</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="na">gradle</span>
-              <span class="n">echo</span> <span class="err">'$</span><span class="o">{</span><span class="n">gradleproperties</span><span class="o">}</span><span class="err">'</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="na">gradle</span><span class="o">/</span><span class="n">gradle</span><span class="o">.</span><span class="na">properties</span>
-              <span class="s">""</span><span class="err">"</span>
-              <span class="n">sh</span> <span class="err">'</span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">gradlew</span><span class="err">'</span>
-              <span class="n">sh</span> <span class="err">'</span><span class="o">./</span><span class="n">gradlew</span> <span class="n">clean</span> <span class="n">build</span> <span class="o">-</span><span class="n">x</span> <span class="n">check</span> <span class="n">pmd</span><span class="err">'</span>
-            <span class="o">}</span>
-          <span class="o">}</span>
-        <span class="n">stage</span><span class="o">(</span><span class="err">'</span><span class="nc">Archive</span><span class="err">'</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">steps</span> <span class="o">{</span>
-                <span class="n">archiveArtifacts</span> <span class="err">'</span><span class="n">app</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">outputs</span><span class="cm">/**/</span><span class="o">*.</span><span class="na">apk</span><span class="err">'</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="n">stage</span><span class="o">(</span><span class="err">'</span><span class="nc">Test</span><span class="err">'</span><span class="o">)</span> <span class="o">{</span>
-              <span class="n">steps</span> <span class="o">{</span>
-                  <span class="n">echo</span> <span class="err">'</span><span class="nc">Testing</span><span class="o">..</span><span class="err">'</span>
-              <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="n">options</span> <span class="o">{</span>
-      <span class="n">gitLabConnection</span><span class="o">(</span><span class="err">'</span><span class="nc">Connection2Gitlab</span><span class="err">'</span><span class="o">)</span>
-  	<span class="o">}</span>
-    <span class="n">post</span> <span class="o">{</span>
-      <span class="n">failure</span> <span class="o">{</span>
-        <span class="n">updateGitlabCommitStatus</span> <span class="nl">name:</span> <span class="err">'</span><span class="nc">Connection2Gitlab</span><span class="err">'</span><span class="o">,</span> <span class="nl">state:</span> <span class="err">'</span><span class="n">failed</span><span class="err">'</span>
-      <span class="o">}</span>
-      <span class="n">success</span> <span class="o">{</span>
-        <span class="n">updateGitlabCommitStatus</span> <span class="nl">name:</span> <span class="err">'</span><span class="nc">Connection2Gitlab</span><span class="err">'</span><span class="o">,</span> <span class="nl">state:</span> <span class="err">'</span><span class="n">success</span><span class="err">'</span>
-      <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre></figure>
-
-<p>Finally you can see the artifact in build page and can download by manual.</p>
+<img src="https://images.unsplash.com/photo-1657659448918-f54b8cdc3c67?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2fEpwZzZLaWRsLUhrfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" /></p>
 
 
 
