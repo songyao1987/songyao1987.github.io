@@ -92,4 +92,114 @@ pipeline {
 }
 {% endhighlight %}
 
-Finally you can see the artifact in build page and can download by manual.
+Finally you can see the artifact in build page and can download by manual.Moreover, we can deploy private Maven repository if we need to publish android libraries(Jar/aar),you just need to add a stage in jenkinsfile for publishing artifact to your Maven repository.So your Application can pull the anroid libraries from your Maven repository with credentials you set in Maven.
+
+Add configs in the root build.gradle
+
+{% highlight javascript %}
+allprojects {
+
+    repositories {
+		jcenter()
+		google()
+		mavenCentral()
+    }
+	maven {
+		url MAVEN_REPO_SNAPSHOTS_URL
+		credentials {
+			username MAVEN_REPO_USERNAME
+			password MAVEN_REPO_PASSWORD
+		}
+	}
+	maven {
+		url MAVEN_REPO_RELEASES_URL
+		credentials {
+			username MAVEN_REPO_USERNAME
+			password MAVEN_REPO_PASSWORD
+		}
+	}
+
+    }
+}
+{% endhighlight %}
+
+We can install and deply nexus Maven repository as following steps.
+{% highlight javascript %}
+Download package from https://www.sonatype.com/products/repository-oss-download
+tar -zxvf  nexus-3.39.0-01-bundle.tar.gz
+
+//Enablie start service automatically
+cd /etc/init.d
+sudo update-rc.d nexus defaults
+sudo service nexus start
+{% endhighlight %}
+
+Now we can publish our android libraries(Jar/aar) to the Maven repository.we can publish snapshots version in our project with command as "gradlew publishToMavenLocal" and publish release version in jenkins with command "gradlew publish"
+Below is an example for publish android aar
+
+{% highlight javascript %}
+task sourceJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            artifactId = project.name
+            //artifact sourceJar
+            artifact("$buildDir/outputs/aar/${project.name}-release-${project.version}.aar")
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                ext.addDependency = {Dependency dep, String scope ->
+                    if (dep.group == null || dep.version == null
+                            || dep.name == null || "unspecified" == dep.name)
+                        return
+                    def dependency = dependenciesNode.appendNode('dependency')
+                    dependency.appendNode('groupId', dep.group)
+                    dependency.appendNode('artifactId', dep.name)
+                    dependency.appendNode('version', dep.version)
+                    dependency.appendNode('scope', scope)
+                    if (!dep.transitive) {
+                        final exclusion = dependency.appendNode('exclusions').appendNode('exclusion')
+                        exclusion.appendNode('groupId', '*')
+                        exclusion.appendNode('artifactId', '*')
+                    } else if (!dep.properties.excludeRules.empty) {
+                        final exclusion = dependency.appendNode('exclusions').appendNode('exclusion')
+                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                            exclusion.appendNode('groupId', rule.group ?: '*')
+                            exclusion.appendNode('artifactId', rule.module ?: '*')
+                        }
+                    }
+                }
+
+                configurations.compile.getDependencies().each { dep -> addDependency(dep, "compile") }
+                configurations.api.getDependencies().each { dep -> addDependency(dep, "compile") }
+                configurations.implementation.getDependencies().each { dep -> addDependency(dep, "runtime") }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = version.endsWith("SNAPSHOT") ? MAVEN_REPO_SNAPSHOTS_URL : MAVEN_REPO_RELEASES_URL
+            credentials {
+                username MAVEN_REPO_USERNAME
+                password MAVEN_REPO_PASSWORD
+            }
+        }
+    }
+}
+
+tasks.withType(PublishToMavenLocal).each {
+    task -> task.dependsOn('assembleRelease')
+}
+tasks.withType(PublishToMavenRepository).each {
+    task -> task.dependsOn('assembleRelease', tasks.withType(PublishToMavenLocal))
+}
+{% endhighlight %}
+
+Anyway we can schedule build task in jenkins and let it auto build when new release branch or tag was created in Gitlab,Jenkins will excute stage build,stage publish to Maven, stage unit test ,stage javadoc, stage notify Gitlab and email to maintainers,etc.
+
+<img src="https://images.unsplash.com/photo-1658188920091-8d38c64bcb79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80">
