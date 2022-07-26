@@ -247,52 +247,60 @@
 </div>
 
 <p>Here is the guidelines to activate SSL in jenkins.
-<!--more-->
-Step 1: Generate CSR certificate
-Execute the following command to generate csr certificate and give name “demo.ssl.csr“.</p>
+<!--more--></p>
+
+<p><strong>Step 1: Generate CSR certificate</strong></p>
+
+<p>Execute the following command to generate csr certificate and give name “demo.ssl.csr“.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">req</span> <span class="o">-</span><span class="k">new</span> <span class="o">&gt;</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">ssl</span><span class="p">.</span><span class="nx">csr</span></code></pre></figure>
 
-<p>Step 2: Create a key file
-Use your PEM file and execute the following command to create a file for the generating certificate and give the name “demo.cert.key”.</p>
+<p><strong>Step 2: Create a key file</strong></p>
+
+<p>Use your PEM file and execute the following command to create a file for the generating certificate and give the name “demo.cert.key”.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">rsa</span> <span class="o">-</span><span class="k">in</span> <span class="nx">privkey</span><span class="p">.</span><span class="nx">pem</span> <span class="o">-</span><span class="nx">out</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">key</span></code></pre></figure>
 
-<p>Step 3: Create CSR certificate using Key file
-Now we have a Key file and CSR file, run following command to create CSR file and define retention periods.</p>
+<p><strong>Step 3: Create CSR certificate using Key file</strong></p>
+
+<p>Now we have a Key file and CSR file, run following command to create CSR file and define retention periods.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">x509</span> <span class="o">-</span><span class="k">in</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">ssl</span><span class="p">.</span><span class="nx">csr</span> <span class="o">-</span><span class="nx">out</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">cert</span> <span class="o">-</span><span class="nx">req</span> <span class="o">-</span><span class="nx">signkey</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">key</span> <span class="o">-</span><span class="nx">days</span> <span class="mi">365</span></code></pre></figure>
 
-<p>Step 4: Create pkcs12 file
-Now, use following command to create an intermediate pkcs12 file and define following parameters.
+<p><strong>Step 4: Create pkcs12 file</strong></p>
+
+<p>Now, use following command to create an intermediate pkcs12 file and define following parameters.
 Give name of pkcs12 file name, example- jenkins_demo.p12
 Set strong password for pkcs12 file
 Give FQDN or alias name, example- ericsong</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">pkcs12</span> <span class="o">-</span><span class="k">export</span> <span class="o">-</span><span class="nx">out</span> <span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">p12</span> <span class="o">-</span><span class="nx">passout</span> <span class="dl">'</span><span class="s1">pass:songyao1234</span><span class="dl">'</span> <span class="o">-</span><span class="nx">inkey</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">key</span> <span class="o">-</span><span class="k">in</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">cert</span> <span class="o">-</span><span class="nx">name</span> <span class="nx">ericsong</span></code></pre></figure>
 
-<p>Step 5: Create Java Keystore file (JKS)
-Now we will use Ketstore command-line tool to generate a new key “jenkins_demo_jks” and will set a password in deststorepass field.</p>
+<p><strong>Step 5: Create Java Keystore file (JKS)</strong></p>
+
+<p>Now we will use Ketstore command-line tool to generate a new key “jenkins_demo_jks” and will set a password in deststorepass field.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">keytool</span> <span class="o">-</span><span class="nx">importkeystore</span> <span class="o">-</span><span class="nx">srckeystore</span> <span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">p12</span> <span class="o">-</span><span class="nx">srcstorepass</span> <span class="dl">'</span><span class="s1">songyao1234</span><span class="dl">'</span> <span class="o">-</span><span class="nx">srcstoretype</span> <span class="nx">PKCS12</span> <span class="o">-</span><span class="nx">srcalias</span> <span class="nx">ericsong</span> <span class="o">-</span><span class="nx">deststoretype</span> <span class="nx">JKS</span> <span class="o">-</span><span class="nx">destkeystore</span> <span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">jks</span> <span class="o">-</span><span class="nx">deststorepass</span> <span class="dl">'</span><span class="s1">songyao1234</span><span class="dl">'</span> <span class="o">-</span><span class="nx">destalias</span> <span class="nx">ericsong</span></code></pre></figure>
 
-<p>Step 6: Copy keystore file to Jenkins
-Execute following commands to create keystore directory and add keystore file to Jenkins at default location as well as change directory permissions.</p>
+<p><strong>Step 6: Copy keystore file to Jenkins</strong></p>
+
+<p>Execute following commands to create keystore directory and add keystore file to Jenkins at default location as well as change directory permissions.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="o">/</span><span class="kd">var</span><span class="sr">/lib/</span><span class="nx">jenkins</span>
 <span class="nx">mkdir</span> <span class="p">.</span><span class="nx">keystore</span>
 <span class="nx">cp</span> <span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">sy</span><span class="o">/</span><span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">jks</span> <span class="o">/</span><span class="kd">var</span><span class="sr">/lib/</span><span class="nx">jenkins</span><span class="o">/</span><span class="p">.</span><span class="nx">keystore</span><span class="o">/</span>
 <span class="nx">chmod</span> <span class="mi">700</span> <span class="p">.</span><span class="nx">keystore</span><span class="o">/</span></code></pre></figure>
 
-<p>Step 7: Change in Jenkins file
-Make few changes in the Jenkins’s file property. Open the file /etc/default/jenkins file.</p>
+<p><strong>Step 7: Change in Jenkins file</strong></p>
+
+<p>Make few changes in the Jenkins’s file property. Open the file /etc/default/jenkins file.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HTTPS_PORT</span><span class="o">=</span><span class="mi">8088</span>
 <span class="nx">KEYSTORE</span><span class="o">=</span><span class="sr">/var/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">jenkins</span><span class="o">/</span><span class="p">.</span><span class="nx">keystore</span><span class="o">/</span><span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">jks</span>
 <span class="nx">PASSWORD</span><span class="o">=</span><span class="nx">songyao1234</span>
 <span class="nx">JENKINS_ARGS</span><span class="o">=</span><span class="dl">"</span><span class="s2">--webroot=/var/cache/$NAME/war --httpsPort=$HTTPS_PORT --httpsKeyStore=$KEYSTORE --httpsKeyStorePassword=$PASSWORD --httpPort=-1</span><span class="dl">"</span></code></pre></figure>
 
-<p>Step 8: Validate the configuration</p>
+<p><strong>Step 8: Validate the configuration</strong></p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">systemctl</span> <span class="nx">restart</span> <span class="nx">jenkins</span>
 <span class="nx">sudo</span> <span class="nx">systemctl</span> <span class="nx">status</span> <span class="nx">jenkins</span>

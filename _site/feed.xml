@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-26T12:27:05+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">EricSong</title><entry><title type="html">How to publish your android library to MavenCenter</title><link href="http://localhost:4000/2021/05/06/publish-mavencenter.html" rel="alternate" type="text/html" title="How to publish your android library to MavenCenter" /><published>2021-05-06T00:00:00+08:00</published><updated>2021-05-06T00:00:00+08:00</updated><id>http://localhost:4000/2021/05/06/publish-mavencenter</id><content type="html" xml:base="http://localhost:4000/2021/05/06/publish-mavencenter.html"><![CDATA[<p>I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-26T13:37:51+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">EricSong</title><entry><title type="html">How to publish your android library to MavenCenter</title><link href="http://localhost:4000/2021/05/06/publish-mavencenter.html" rel="alternate" type="text/html" title="How to publish your android library to MavenCenter" /><published>2021-05-06T00:00:00+08:00</published><updated>2021-05-06T00:00:00+08:00</updated><id>http://localhost:4000/2021/05/06/publish-mavencenter</id><content type="html" xml:base="http://localhost:4000/2021/05/06/publish-mavencenter.html"><![CDATA[<p>I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.
 <!--more--></p>
 
-<p>Step 1: Registering a Jira account with Sonatype, and verifying your ownership of the group ID you want to publish your artifact with.
-While login in with your Jira account registered above,you need to create a Jira ticket and it will be assigned automatically.Notes the 
+<p><strong>Step 1: Registering a Jira account with Sonatype, and verifying your ownership of the group ID you want to publish your artifact with.</strong></p>
+
+<p>While login in with your Jira account registered above,you need to create a Jira ticket and it will be assigned automatically.Notes the 
 Issue type must be “New Project” and select Project as “Community Support - Open Source Project Repository Hosting (OSSRH)”.</p>
 
 <p>On the next page, fill out the following fields:</p>
 
-<p>Summary: Create repository for your.group.id.here</p>
+<p><strong>Summary:</strong> Create repository for your.group.id.here</p>
 
-<p>Description: An optional, quick summary of what your project is.</p>
+<p><strong>Description:</strong> An optional, quick summary of what your project is.</p>
 
-<p>Group Id: Your group ID, as described a few sections earlier.</p>
+<p><strong>Group Id:</strong> Your group ID, as described a few sections earlier.</p>
 
-<p>Project URL: If your project has a webpage, the URL of that page. This can also be just the GitHub repository.</p>
+<p><strong>Project URL:</strong> If your project has a webpage, the URL of that page. This can also be just the GitHub repository.</p>
 
-<p>SCM url: Your source control URL, i.e. the GitHub repository link.</p>
+<p><strong>SCM url:</strong> Your source control URL, i.e. the GitHub repository link.</p>
 
-<p>Username(s): If you want additional users (on top of the one you’re using for this process) to have deploy access for your group ID,you can list them here.</p>
+<p><strong>Username(s):</strong> If you want additional users (on top of the one you’re using for this process) to have deploy access for your group ID,you can list them here.</p>
 
 <p>Already Synced to Central: If you’re just getting started, this should be No.</p>
 
@@ -30,7 +31,7 @@ Below is Done for my ticket.</p>
 
 <p><img src="/assets/images/jira_sonatype.png" style="width:625px;height:240px;" /></p>
 
-<p>Step 2: Generating a GPG key pair for signing your artifacts, publishing your public key, and exporting your private key.
+<p><strong>Step 2: Generating a GPG key pair for signing your artifacts, publishing your public key, and exporting your private key.</strong>
 GPG Suite is an easy-to-use distribution for macOS, and you can use Gpg4win if you’re on Windows. Both of these come with GUI tools 
 that make managing keys easier.
 To generate a new key, run the following command:</p>
@@ -91,7 +92,7 @@ Here’s the full flow you’ll go through, with a bit of truncation:</p>
 
 <p>Enter your passphrase that you’ve set earlier when prompted. You can either copy-paste this key from the terminal output later on, or save it to a file temporarily.</p>
 
-<p>Step 3: Setting up Gradle tasks that can sign upload your artifacts to a staging repository.
+<p><strong>Step 3: Setting up Gradle tasks that can sign upload your artifacts to a staging repository.</strong>
 Below is a sample for publishing artifact in my project.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">apply</span> <span class="nx">plugin</span><span class="p">:</span> <span class="dl">'</span><span class="s1">maven</span><span class="dl">'</span>
@@ -152,59 +153,67 @@ Below is a sample for publishing artifact in my project.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">apply</span> <span class="k">from</span><span class="p">:</span> <span class="dl">'</span><span class="s1">../maven-publish-aar.gradle</span><span class="dl">'</span></code></pre></figure>
 
-<p>Step 4: Manually going through the process of checking your artifacts in the staging repo and releasing them via the Sonatype web UI.</p>
+<p><strong>Step 4: Manually going through the process of checking your artifacts in the staging repo and releasing them via the Sonatype web UI.</strong></p>
 
-<p>Step 5: Automating the close &amp; release flow with a Gradle plugin</p>
+<p><strong>Step 5: Automating the close &amp; release flow with a Gradle plugin.</strong></p>
 
-<p>Step 6: Configuring CI workflows with GitHub Actions to automate all of the above</p>
+<p><strong>Step 6: Configuring CI workflows with GitHub Actions to automate all of the above.</strong></p>
 
-<p><img src="https://images.unsplash.com/photo-1657659448918-f54b8cdc3c67?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2fEpwZzZLaWRsLUhrfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" /></p>]]></content><author><name></name></author><category term="Jira" /><category term="MavenCenter" /><category term="Github" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.]]></summary></entry><entry><title type="html">How to config SSL in Jenkins</title><link href="http://localhost:4000/2020/03/02/cicd-02.html" rel="alternate" type="text/html" title="How to config SSL in Jenkins" /><published>2020-03-02T00:00:00+08:00</published><updated>2020-03-02T00:00:00+08:00</updated><id>http://localhost:4000/2020/03/02/cicd-02</id><content type="html" xml:base="http://localhost:4000/2020/03/02/cicd-02.html"><![CDATA[<p>Here is the guidelines to activate SSL in jenkins.
-<!--more-->
-Step 1: Generate CSR certificate
-Execute the following command to generate csr certificate and give name “demo.ssl.csr“.</p>
+<p><img src="https://images.unsplash.com/photo-1658813000928-698628a46b4b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MXx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" /></p>]]></content><author><name></name></author><category term="Jira" /><category term="MavenCenter" /><category term="Github" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.]]></summary></entry><entry><title type="html">How to config SSL in Jenkins</title><link href="http://localhost:4000/2020/03/02/cicd-02.html" rel="alternate" type="text/html" title="How to config SSL in Jenkins" /><published>2020-03-02T00:00:00+08:00</published><updated>2020-03-02T00:00:00+08:00</updated><id>http://localhost:4000/2020/03/02/cicd-02</id><content type="html" xml:base="http://localhost:4000/2020/03/02/cicd-02.html"><![CDATA[<p>Here is the guidelines to activate SSL in jenkins.
+<!--more--></p>
+
+<p><strong>Step 1: Generate CSR certificate</strong></p>
+
+<p>Execute the following command to generate csr certificate and give name “demo.ssl.csr“.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">req</span> <span class="o">-</span><span class="k">new</span> <span class="o">&gt;</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">ssl</span><span class="p">.</span><span class="nx">csr</span></code></pre></figure>
 
-<p>Step 2: Create a key file
-Use your PEM file and execute the following command to create a file for the generating certificate and give the name “demo.cert.key”.</p>
+<p><strong>Step 2: Create a key file</strong></p>
+
+<p>Use your PEM file and execute the following command to create a file for the generating certificate and give the name “demo.cert.key”.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">rsa</span> <span class="o">-</span><span class="k">in</span> <span class="nx">privkey</span><span class="p">.</span><span class="nx">pem</span> <span class="o">-</span><span class="nx">out</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">key</span></code></pre></figure>
 
-<p>Step 3: Create CSR certificate using Key file
-Now we have a Key file and CSR file, run following command to create CSR file and define retention periods.</p>
+<p><strong>Step 3: Create CSR certificate using Key file</strong></p>
+
+<p>Now we have a Key file and CSR file, run following command to create CSR file and define retention periods.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">x509</span> <span class="o">-</span><span class="k">in</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">ssl</span><span class="p">.</span><span class="nx">csr</span> <span class="o">-</span><span class="nx">out</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">cert</span> <span class="o">-</span><span class="nx">req</span> <span class="o">-</span><span class="nx">signkey</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">key</span> <span class="o">-</span><span class="nx">days</span> <span class="mi">365</span></code></pre></figure>
 
-<p>Step 4: Create pkcs12 file
-Now, use following command to create an intermediate pkcs12 file and define following parameters.
+<p><strong>Step 4: Create pkcs12 file</strong></p>
+
+<p>Now, use following command to create an intermediate pkcs12 file and define following parameters.
 Give name of pkcs12 file name, example- jenkins_demo.p12
 Set strong password for pkcs12 file
 Give FQDN or alias name, example- ericsong</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">openssl</span> <span class="nx">pkcs12</span> <span class="o">-</span><span class="k">export</span> <span class="o">-</span><span class="nx">out</span> <span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">p12</span> <span class="o">-</span><span class="nx">passout</span> <span class="dl">'</span><span class="s1">pass:songyao1234</span><span class="dl">'</span> <span class="o">-</span><span class="nx">inkey</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">key</span> <span class="o">-</span><span class="k">in</span> <span class="nx">demo</span><span class="p">.</span><span class="nx">cert</span><span class="p">.</span><span class="nx">cert</span> <span class="o">-</span><span class="nx">name</span> <span class="nx">ericsong</span></code></pre></figure>
 
-<p>Step 5: Create Java Keystore file (JKS)
-Now we will use Ketstore command-line tool to generate a new key “jenkins_demo_jks” and will set a password in deststorepass field.</p>
+<p><strong>Step 5: Create Java Keystore file (JKS)</strong></p>
+
+<p>Now we will use Ketstore command-line tool to generate a new key “jenkins_demo_jks” and will set a password in deststorepass field.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">keytool</span> <span class="o">-</span><span class="nx">importkeystore</span> <span class="o">-</span><span class="nx">srckeystore</span> <span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">p12</span> <span class="o">-</span><span class="nx">srcstorepass</span> <span class="dl">'</span><span class="s1">songyao1234</span><span class="dl">'</span> <span class="o">-</span><span class="nx">srcstoretype</span> <span class="nx">PKCS12</span> <span class="o">-</span><span class="nx">srcalias</span> <span class="nx">ericsong</span> <span class="o">-</span><span class="nx">deststoretype</span> <span class="nx">JKS</span> <span class="o">-</span><span class="nx">destkeystore</span> <span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">jks</span> <span class="o">-</span><span class="nx">deststorepass</span> <span class="dl">'</span><span class="s1">songyao1234</span><span class="dl">'</span> <span class="o">-</span><span class="nx">destalias</span> <span class="nx">ericsong</span></code></pre></figure>
 
-<p>Step 6: Copy keystore file to Jenkins
-Execute following commands to create keystore directory and add keystore file to Jenkins at default location as well as change directory permissions.</p>
+<p><strong>Step 6: Copy keystore file to Jenkins</strong></p>
+
+<p>Execute following commands to create keystore directory and add keystore file to Jenkins at default location as well as change directory permissions.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="o">/</span><span class="kd">var</span><span class="sr">/lib/</span><span class="nx">jenkins</span>
 <span class="nx">mkdir</span> <span class="p">.</span><span class="nx">keystore</span>
 <span class="nx">cp</span> <span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">sy</span><span class="o">/</span><span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">jks</span> <span class="o">/</span><span class="kd">var</span><span class="sr">/lib/</span><span class="nx">jenkins</span><span class="o">/</span><span class="p">.</span><span class="nx">keystore</span><span class="o">/</span>
 <span class="nx">chmod</span> <span class="mi">700</span> <span class="p">.</span><span class="nx">keystore</span><span class="o">/</span></code></pre></figure>
 
-<p>Step 7: Change in Jenkins file
-Make few changes in the Jenkins’s file property. Open the file /etc/default/jenkins file.</p>
+<p><strong>Step 7: Change in Jenkins file</strong></p>
+
+<p>Make few changes in the Jenkins’s file property. Open the file /etc/default/jenkins file.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HTTPS_PORT</span><span class="o">=</span><span class="mi">8088</span>
 <span class="nx">KEYSTORE</span><span class="o">=</span><span class="sr">/var/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">jenkins</span><span class="o">/</span><span class="p">.</span><span class="nx">keystore</span><span class="o">/</span><span class="nx">jenkins_demo</span><span class="p">.</span><span class="nx">jks</span>
 <span class="nx">PASSWORD</span><span class="o">=</span><span class="nx">songyao1234</span>
 <span class="nx">JENKINS_ARGS</span><span class="o">=</span><span class="dl">"</span><span class="s2">--webroot=/var/cache/$NAME/war --httpsPort=$HTTPS_PORT --httpsKeyStore=$KEYSTORE --httpsKeyStorePassword=$PASSWORD --httpPort=-1</span><span class="dl">"</span></code></pre></figure>
 
-<p>Step 8: Validate the configuration</p>
+<p><strong>Step 8: Validate the configuration</strong></p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">systemctl</span> <span class="nx">restart</span> <span class="nx">jenkins</span>
 <span class="nx">sudo</span> <span class="nx">systemctl</span> <span class="nx">status</span> <span class="nx">jenkins</span>
@@ -246,11 +255,11 @@ Make few changes in the Jenkins’s file property. Open the file /etc/default/je
 
 <p>Hope it can be helpful to you.</p>]]></content><author><name></name></author><category term="Jenkins" /><category term="CICD" /><category term="Maven" /><category term="Markdown" /><category term="Android" /><category term="Groovy" /><category term="Java" /><summary type="html"><![CDATA[Here is the guidelines to activate SSL in jenkins.]]></summary></entry><entry><title type="html">How to work with Jenkins,Gitlab and Maven</title><link href="http://localhost:4000/2020/01/17/cicd-01.html" rel="alternate" type="text/html" title="How to work with Jenkins,Gitlab and Maven" /><published>2020-01-17T00:00:00+08:00</published><updated>2020-01-17T00:00:00+08:00</updated><id>http://localhost:4000/2020/01/17/cicd-01</id><content type="html" xml:base="http://localhost:4000/2020/01/17/cicd-01.html"><![CDATA[<p>First of all, we need to install jenkins as the following steps.
 <!--more-->
-Step 1: install JDK, and we can check it with command “java –version”</p>
+<strong>Step 1: install JDK, and we can check it with command “java –version”</strong></p>
 
-<p>Step 2: install android SDK and android NDK if you are working in Android projects</p>
+<p><strong>Step 2: install android SDK and android NDK if you are working in Android projects</strong></p>
 
-<p>Step 3: install Jenkins
+<p><strong>Step 3: install Jenkins</strong>
 Add the key from official software repository to the apt key in locall</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">wget</span> <span class="o">-</span><span class="nx">q</span> <span class="o">-</span><span class="nx">O</span> <span class="o">-</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -</span></code></pre></figure>

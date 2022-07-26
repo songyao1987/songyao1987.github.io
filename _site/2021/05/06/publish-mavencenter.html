@@ -239,23 +239,24 @@
 <p>I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.
 <!--more--></p>
 
-<p>Step 1: Registering a Jira account with Sonatype, and verifying your ownership of the group ID you want to publish your artifact with.
-While login in with your Jira account registered above,you need to create a Jira ticket and it will be assigned automatically.Notes the 
+<p><strong>Step 1: Registering a Jira account with Sonatype, and verifying your ownership of the group ID you want to publish your artifact with.</strong></p>
+
+<p>While login in with your Jira account registered above,you need to create a Jira ticket and it will be assigned automatically.Notes the 
 Issue type must be “New Project” and select Project as “Community Support - Open Source Project Repository Hosting (OSSRH)”.</p>
 
 <p>On the next page, fill out the following fields:</p>
 
-<p>Summary: Create repository for your.group.id.here</p>
+<p><strong>Summary:</strong> Create repository for your.group.id.here</p>
 
-<p>Description: An optional, quick summary of what your project is.</p>
+<p><strong>Description:</strong> An optional, quick summary of what your project is.</p>
 
-<p>Group Id: Your group ID, as described a few sections earlier.</p>
+<p><strong>Group Id:</strong> Your group ID, as described a few sections earlier.</p>
 
-<p>Project URL: If your project has a webpage, the URL of that page. This can also be just the GitHub repository.</p>
+<p><strong>Project URL:</strong> If your project has a webpage, the URL of that page. This can also be just the GitHub repository.</p>
 
-<p>SCM url: Your source control URL, i.e. the GitHub repository link.</p>
+<p><strong>SCM url:</strong> Your source control URL, i.e. the GitHub repository link.</p>
 
-<p>Username(s): If you want additional users (on top of the one you’re using for this process) to have deploy access for your group ID,you can list them here.</p>
+<p><strong>Username(s):</strong> If you want additional users (on top of the one you’re using for this process) to have deploy access for your group ID,you can list them here.</p>
 
 <p>Already Synced to Central: If you’re just getting started, this should be No.</p>
 
@@ -268,7 +269,7 @@ Below is Done for my ticket.</p>
 
 <p><img src="/assets/images/jira_sonatype.png" style="width:625px;height:240px;" /></p>
 
-<p>Step 2: Generating a GPG key pair for signing your artifacts, publishing your public key, and exporting your private key.
+<p><strong>Step 2: Generating a GPG key pair for signing your artifacts, publishing your public key, and exporting your private key.</strong>
 GPG Suite is an easy-to-use distribution for macOS, and you can use Gpg4win if you’re on Windows. Both of these come with GUI tools 
 that make managing keys easier.
 To generate a new key, run the following command:</p>
@@ -329,7 +330,7 @@ Here’s the full flow you’ll go through, with a bit of truncation:</p>
 
 <p>Enter your passphrase that you’ve set earlier when prompted. You can either copy-paste this key from the terminal output later on, or save it to a file temporarily.</p>
 
-<p>Step 3: Setting up Gradle tasks that can sign upload your artifacts to a staging repository.
+<p><strong>Step 3: Setting up Gradle tasks that can sign upload your artifacts to a staging repository.</strong>
 Below is a sample for publishing artifact in my project.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">apply</span> <span class="nx">plugin</span><span class="p">:</span> <span class="dl">'</span><span class="s1">maven</span><span class="dl">'</span>
@@ -390,13 +391,13 @@ Below is a sample for publishing artifact in my project.</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">apply</span> <span class="k">from</span><span class="p">:</span> <span class="dl">'</span><span class="s1">../maven-publish-aar.gradle</span><span class="dl">'</span></code></pre></figure>
 
-<p>Step 4: Manually going through the process of checking your artifacts in the staging repo and releasing them via the Sonatype web UI.</p>
+<p><strong>Step 4: Manually going through the process of checking your artifacts in the staging repo and releasing them via the Sonatype web UI.</strong></p>
 
-<p>Step 5: Automating the close &amp; release flow with a Gradle plugin</p>
+<p><strong>Step 5: Automating the close &amp; release flow with a Gradle plugin.</strong></p>
 
-<p>Step 6: Configuring CI workflows with GitHub Actions to automate all of the above</p>
+<p><strong>Step 6: Configuring CI workflows with GitHub Actions to automate all of the above.</strong></p>
 
-<p><img src="https://images.unsplash.com/photo-1657659448918-f54b8cdc3c67?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2fEpwZzZLaWRsLUhrfHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" /></p>
+<p><img src="https://images.unsplash.com/photo-1658813000928-698628a46b4b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MXx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" /></p>
 
 
 

@@ -11,23 +11,24 @@ tags:
 I will take my first published library as an example and make this a single source of guidance for all of you who are interested in publishing Android libraries.
 <!--more-->
 
-Step 1: Registering a Jira account with Sonatype, and verifying your ownership of the group ID you want to publish your artifact with.
+**Step 1: Registering a Jira account with Sonatype, and verifying your ownership of the group ID you want to publish your artifact with.**
+
 While login in with your Jira account registered above,you need to create a Jira ticket and it will be assigned automatically.Notes the 
 Issue type must be "New Project" and select Project as "Community Support - Open Source Project Repository Hosting (OSSRH)".
 
 On the next page, fill out the following fields:
 
-Summary: Create repository for your.group.id.here
+**Summary:** Create repository for your.group.id.here
 
-Description: An optional, quick summary of what your project is.
+**Description:** An optional, quick summary of what your project is.
 
-Group Id: Your group ID, as described a few sections earlier.
+**Group Id:** Your group ID, as described a few sections earlier.
 
-Project URL: If your project has a webpage, the URL of that page. This can also be just the GitHub repository.
+**Project URL:** If your project has a webpage, the URL of that page. This can also be just the GitHub repository.
 
-SCM url: Your source control URL, i.e. the GitHub repository link.
+**SCM url:** Your source control URL, i.e. the GitHub repository link.
 
-Username(s): If you want additional users (on top of the one you’re using for this process) to have deploy access for your group ID,you can list them here.
+**Username(s):** If you want additional users (on top of the one you’re using for this process) to have deploy access for your group ID,you can list them here.
 
 Already Synced to Central: If you’re just getting started, this should be No.
 
@@ -40,7 +41,7 @@ Below is Done for my ticket.
 
 <img src="/assets/images/jira_sonatype.png" style="width:625px;height:240px;">
 
-Step 2: Generating a GPG key pair for signing your artifacts, publishing your public key, and exporting your private key.
+**Step 2: Generating a GPG key pair for signing your artifacts, publishing your public key, and exporting your private key.**
 GPG Suite is an easy-to-use distribution for macOS, and you can use Gpg4win if you’re on Windows. Both of these come with GUI tools 
 that make managing keys easier.
 To generate a new key, run the following command:
@@ -103,7 +104,7 @@ gpg --export-secret-keys 5BEF072A | base64
 {% endhighlight %}
 Enter your passphrase that you’ve set earlier when prompted. You can either copy-paste this key from the terminal output later on, or save it to a file temporarily.
 
-Step 3: Setting up Gradle tasks that can sign upload your artifacts to a staging repository.
+**Step 3: Setting up Gradle tasks that can sign upload your artifacts to a staging repository.**
 Below is a sample for publishing artifact in my project.
 {% highlight javascript %}
 apply plugin: 'maven'
@@ -164,10 +165,10 @@ Finally,do not forgot to add the reference in build.gradle of Module directoy fo
 {% highlight javascript %}
 apply from: '../maven-publish-aar.gradle'
 {% endhighlight %}
-Step 4: Manually going through the process of checking your artifacts in the staging repo and releasing them via the Sonatype web UI.
+**Step 4: Manually going through the process of checking your artifacts in the staging repo and releasing them via the Sonatype web UI.**
 
-Step 5: Automating the close & release flow with a Gradle plugin
+**Step 5: Automating the close & release flow with a Gradle plugin.**
 
-Step 6: Configuring CI workflows with GitHub Actions to automate all of the above
+**Step 6: Configuring CI workflows with GitHub Actions to automate all of the above.**
 
-<img src="https://images.unsplash.com/photo-1657659448918-f54b8cdc3c67?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2fEpwZzZLaWRsLUhrfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
+<img src="https://images.unsplash.com/photo-1658813000928-698628a46b4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
